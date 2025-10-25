@@ -1,0 +1,37 @@
+{% extends 'adminpanel/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="page-container">
+    <h2 class="page-title">Registered Customers</h2>
+
+    <div class="back-link">
+        <a href="{% url 'adminpanel:dashboard' %}" class="btn-back">← Back to Dashboard</a>
+    </div>
+
+    <div class="table-container">
+        <table class="list-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.email }}</td>
+                    <td>{{ customer.phone }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No customers found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

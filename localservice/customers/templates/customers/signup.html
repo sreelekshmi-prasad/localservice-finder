@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Signup</title>
+    <link rel="stylesheet" href="{% static 'customers/css/form.css' %}">
+</head>
+<body>
+    <div class="login-background">
+        <div class="overlay"></div>
+        <div class="login-box">
+            <h2 class="login-title">Customer Signup</h2>
+            <form method="POST" action="{% url 'customers:signup' %}" class="login-form">
+                {% csrf_token %}
+                <input type="text" name="name" placeholder="Full Name" required class="input-field">
+                <input type="email" name="email" placeholder="Email" required class="input-field">
+                <input type="password" name="password" placeholder="Password" required class="input-field">
+                <input type="text" name="phone" placeholder="Phone" class="input-field">
+                <button type="submit" class="btn">Signup</button>
+            </form>
+
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            <p class="signup-link">Already have an account? <a href="{% url 'customers:login' %}">Login</a></p>
+        </div>
+    </div>
+</body>
+</html>

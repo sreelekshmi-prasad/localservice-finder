@@ -1,0 +1,31 @@
+{% extends 'adminpanel/base.html' %}
+{% block content %}
+<h2>Providers List</h2>
+
+<table border="1" cellpadding="10">
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Services</th>
+  </tr>
+  {% for item in prov_data %}
+  <tr>
+    <td>{{ item.provider.full_name }}</td>
+    <td>{{ item.provider.email }}</td>
+    <td>{{ item.provider.phone }}</td>
+    <td>
+      {% if item.services %}
+        <ul>
+        {% for s in item.services %}
+          <li>{{ s.title }}</li>
+        {% endfor %}
+        </ul>
+      {% else %}
+        No services yet
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="{% static 'adminpanel/css/styles.css' %}">
+</head>
+<body class="login-slideshow" 
+      data-images='[
+        "{% static "adminpanel/images/bg1.jpg" %}",
+        "{% static "adminpanel/images/bg2.jpg" %}",
+        "{% static "adminpanel/images/bg3.jpg" %}",
+        "{% static "adminpanel/images/bg4.jpg" %}"
+      ]'>
+    <div class="overlay"></div>
+
+    <div class="login-container">
+        <h2 class="login-title">Admin Login</h2>
+        <form method="POST" action="{% url 'adminpanel:login' %}" class="login-form">
+            {% csrf_token %}
+            <input type="email" name="email" placeholder="Email" required class="login-input">
+            <input type="password" name="password" placeholder="Password" required class="login-input">
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+
+        {% if error %}
+        <p class="error-msg">{{ error }}</p>
+        {% endif %}
+    </div>
+
+    <script src="{% static 'adminpanel/js/main.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Local Service Finder</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <div class="container">
+        <div class="content">
+            <h1>Welcome to <span>Local Service Finder</span></h1>
+            <p>Find trusted local professionals and services in your area — quick, easy, and reliable.</p>
+            <div class="buttons">
+                <a href="{% url 'customers:login' %}" class="btn customer-btn">Customer Login / Signup</a>
+                <a href="{% url 'providers:login' %}" class="btn provider-btn">Provider Login / Signup</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

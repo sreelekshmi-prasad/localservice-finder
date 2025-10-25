@@ -1,0 +1,32 @@
+{% extends 'adminpanel/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h2 class="page-title">📊 Dashboard Overview</h2>
+    <p class="subtitle">Welcome, {{ request.session.admin_name }} 👋</p>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>Providers</h3>
+            <p class="count">{{ counts.providers }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Customers</h3>
+            <p class="count">{{ counts.customers }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Services</h3>
+            <p class="count">{{ counts.services }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Categories</h3>
+            <p class="count">{{ counts.categories }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Reviews</h3>
+            <p class="count">{{ counts.reviews }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
