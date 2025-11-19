@@ -1,0 +1,29 @@
+{% extends 'providers/base.html' %}
+
+{% block content %}
+<h2>Add Service Slot</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Choose Service:</label>
+    <select name="service_id">
+        {% for service in services %}
+            <option value="{{ service.id }}">{{ service.title }}</option>
+        {% endfor %}
+    </select>
+    <br><br>
+
+    <label>Date:</label>
+    <input type="date" name="date" required><br><br>
+
+    <label>Start Time:</label>
+    <input type="time" name="start_time" required><br><br>
+
+    <label>End Time:</label>
+    <input type="time" name="end_time" required><br><br>
+
+    <button type="submit">Add Slot</button>
+</form>
+
+{% endblock %}

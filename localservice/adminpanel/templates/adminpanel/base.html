@@ -13,15 +13,29 @@
 <body>
     <header class="topbar">
         <div class="logo">🛠️ Local Service Finder — Admin</div>
+
         <nav class="nav-links">
+
             <a href="{% url 'adminpanel:dashboard' %}">Dashboard</a>
-            <a href="{% url 'adminpanel:categories' %}">Categories</a>
-            <a href="{% url 'adminpanel:providers' %}">Providers</a>
+
+
+            <!-- Providers link with pending badge -->
+            <a href="{% url 'adminpanel:providers' %}">
+                Providers
+                {% if pending_providers_count > 0 %}
+                    <span class="badge">{{ pending_providers_count }}</span>
+                {% endif %}
+            </a>
+
             <a href="{% url 'adminpanel:customers' %}">Customers</a>
+
             <a href="{% url 'adminpanel:services' %}">Services</a>
+
             <a href="{% url 'adminpanel:reviews' %}">Reviews</a>
+
             <a href="{% url 'adminpanel:logout' %}" class="logout-btn">Logout</a>
         </nav>
+
     </header>
 
     <main class="content-area">
@@ -32,7 +46,7 @@
     <footer class="footer">
         <p>© {{ now|date:"Y" }} Local Service Finder | Admin Panel</p>
     </footer>
-    <script src="{% static 'adminpanel/js/main.js' %}"></script>
 
+    <script src="{% static 'adminpanel/js/main.js' %}"></script>
 </body>
 </html>

@@ -1,18 +1,26 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Customer Dashboard</title>
     <link rel="stylesheet" href="{% static 'customers/css/form.css' %}">
 </head>
 <body>
-    <div class="dashboard-container">
-        <h1>Welcome, {{ customer.name }}</h1>
-        <p>Email: {{ customer.email }}</p>
-        <p>Phone: {{ customer.phone }}</p>
+<h1>Welcome, {{ customer.name }}</h1>
 
-        <a href="{% url 'home' %}">Back to Home</a>
-    </div>
+<h2>Available Services</h2>
+<ul>
+    {% for service in services %}
+    <li>
+        {{ service.title }} ({{ service.category }}) -
+        <a href="{% url 'customers:view_slots' service.id %}">View Slots</a>
+    </li>
+    {% empty %}
+    <li>No services available.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'customers:my_bookings' %}">My Bookings</a> |
+<a href="{% url 'customers:logout' %}">Logout</a>
 </body>
 </html>

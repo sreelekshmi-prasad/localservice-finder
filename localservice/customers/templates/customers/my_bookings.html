@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Bookings</title>
+</head>
+<body>
+<h1>My Bookings</h1>
+
+<table border="1">
+<tr>
+    <th>Service</th>
+    <th>Date</th>
+    <th>Time</th>
+</tr>
+{% for booking in bookings %}
+<tr>
+    <td>{{ booking.slot.service.title }}</td>
+    <td>{{ booking.slot.date }}</td>
+    <td>{{ booking.slot.start_time }} - {{ booking.slot.end_time }}</td>
+</tr>
+{% empty %}
+<tr><td colspan="3">No bookings yet.</td></tr>
+{% endfor %}
+</table>
+
+<a href="{% url 'customers:dashboard' %}">Back to Dashboard</a>
+</body>
+</html>

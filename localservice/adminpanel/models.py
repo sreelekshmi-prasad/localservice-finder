@@ -1,11 +1,13 @@
-from django.db import models
-
-# Create your models here.
 # adminpanel/models.py
 from datetime import datetime
 import mongoengine as me
 from werkzeug.security import generate_password_hash, check_password_hash
-from providers.models import Provider
+from providers.models import Provider, Service
+from customers.models import Customer
+
+
+# DO NOT import Provider or Service here
+# They belong to the providers app
 
 class AdminUser(me.Document):
     email = me.EmailField(required=True, unique=True)
@@ -20,42 +22,9 @@ class AdminUser(me.Document):
         return check_password_hash(self.password_hash, password)
 
 
-class Category(me.Document):
-    name = me.StringField(required=True, unique=True)
-    description = me.StringField()
-    created_at = me.DateTimeField(default=datetime.utcnow)
-    meta = {'collection': 'categories'}
-
-
-class Provider(me.Document):
-    name = me.StringField(required=True)
-    email = me.EmailField(required=True)
-    phone = me.StringField()
-    address = me.StringField()
-    created_at = me.DateTimeField(default=datetime.utcnow)
-    meta = {'collection': 'providers'}
-
-
-class Customer(me.Document):
-    name = me.StringField(required=True)
-    email = me.EmailField(required=True)
-    phone = me.StringField()
-    created_at = me.DateTimeField(default=datetime.utcnow)
-    meta = {'collection': 'customers'}
-
-
-class Service(me.Document):
-    title = me.StringField(required=True)
-    description = me.StringField()
-    category = me.ReferenceField(Category)
-    provider = me.ReferenceField(Provider)
-    price = me.FloatField(default=0)
-    created_at = me.DateTimeField(default=datetime.utcnow)
-    meta = {'collection': 'services'}
-
 
 class Review(me.Document):
-    service = me.ReferenceField(Service)
+    service = me.ReferenceField("Service")     # Use string reference
     customer = me.ReferenceField(Customer)
     rating = me.IntField(min_value=1, max_value=5)
     comment = me.StringField()

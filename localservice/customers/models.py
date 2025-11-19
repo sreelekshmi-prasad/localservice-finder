@@ -1,10 +1,12 @@
-from django.db import models
+import mongoengine as me
 
-# Create your models here.
-from mongoengine import Document, StringField
+class Customer(me.Document):
+    name = me.StringField(required=True)
+    email = me.EmailField(required=True, unique=True)
+    password = me.StringField(required=True)
+    phone = me.StringField()
 
-class Customer(Document):
-    name = StringField(required=True)
-    email = StringField(required=True, unique=True)
-    password = StringField(required=True)
-    phone = StringField()
+    meta = {"collection": "customers"}
+
+    def __str__(self):
+        return self.name

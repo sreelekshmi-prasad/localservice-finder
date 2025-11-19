@@ -1,0 +1,28 @@
+{% extends "providers/base.html" %}
+{% block content %}
+<h2>Edit Availability Slot</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <label>Service:</label>
+    <select name="service_id" required>
+        {% for s in services %}
+        <option value="{{ s.id }}" {% if slot.service.id == s.id %}selected{% endif %}>
+            {{ s.title }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <label>Date:</label>
+    <input type="date" name="date" value="{{ slot.date }}" required>
+
+    <label>Start Time:</label>
+    <input type="text" name="start_time" value="{{ slot.start_time }}" required>
+
+    <label>End Time:</label>
+    <input type="text" name="end_time" value="{{ slot.end_time }}" required>
+
+    <button type="submit" class="btn">Update Slot</button>
+    <a href="{% url 'providers:dashboard' %}" class="btn">Back to Dashboard</a>
+</form>
+{% endblock %}

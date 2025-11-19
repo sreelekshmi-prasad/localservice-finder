@@ -5,24 +5,56 @@
     <title>Provider Signup</title>
     <link rel="stylesheet" href="{% static 'providers/css/form.css' %}">
 </head>
+
 <body>
     <div class="form-container">
         <h2>Provider Signup</h2>
+
         <form method="POST" action="{% url 'providers:signup' %}">
             {% csrf_token %}
+
+            <!-- Full Name -->
             <input type="text" name="full_name" placeholder="Full Name" required class="input-field">
+
+            <!-- Email -->
             <input type="email" name="email" placeholder="Email" required class="input-field">
+
+            <!-- Password -->
             <input type="password" name="password" placeholder="Password" required class="input-field">
+
+            <!-- Phone -->
             <input type="text" name="phone" placeholder="Phone" class="input-field">
-            <input type="text" name="service_name" placeholder="Service Name" class="input-field">
-            <input type="text" name="service_category" placeholder="Service Category" class="input-field">
-            <textarea name="bio" placeholder="Short Bio" class="input-field"></textarea>
+
+            <!-- Service Name -->
+            <select name="service_name" class="input-field" required>
+                <option value="">Select Service</option>
+                <option value="Plumbing">Plumbing</option>
+                <option value="Electrician">Electrician</option>
+                <option value="Carpentry">Carpentry</option>
+                <option value="Beautician">Beautician</option>
+                <option value="Cleaning">Cleaning</option>
+                <option value="Painting">Painting</option>
+                <option value="AC Mechanic">AC Mechanic</option>
+                <option value="Driving">Driving</option>
+                <option value="Tutoring">Tutoring</option>
+                <option value="Delivery">Delivery</option>
+            </select>
+
+            <!-- Service Category -->
+            <select name="service_category" class="input-field" required>
+                <option value="">Select Category</option>
+                <option value="Home Services">Home Services</option>
+                <option value="Beauty & Wellness">Beauty & Wellness</option>
+                <option value="Education">Education</option>
+                <option value="Repairs">Repairs</option>
+                <option value="Maintenance">Maintenance</option>
+            </select>
 
             <!-- State Dropdown -->
             <select name="state" id="state" class="input-field" required>
                 <option value="">Select State</option>
                 {% for state in state_city.keys %}
-                <option value="{{ state }}">{{ state }}</option>
+                    <option value="{{ state }}">{{ state }}</option>
                 {% endfor %}
             </select>
 
@@ -31,19 +63,23 @@
                 <option value="">Select City</option>
             </select>
 
+            <!-- Submit -->
             <button type="submit" class="btn">Signup</button>
 
+            <!-- Messages -->
             {% if messages %}
                 <ul class="messages">
-                {% for message in messages %}
-                    <li class="{{ message.tags }}">{{ message }}</li>
-                {% endfor %}
+                    {% for message in messages %}
+                        <li class="{{ message.tags }}">{{ message }}</li>
+                    {% endfor %}
                 </ul>
             {% endif %}
         </form>
+
         <p>Already have an account? <a href="{% url 'providers:login' %}">Login</a></p>
     </div>
 
+    <!-- State-City Dynamic Binding Script -->
     <script>
         const stateCity = {{ state_city|safe }};
         const stateSelect = document.getElementById('state');
@@ -52,6 +88,7 @@
         stateSelect.addEventListener('change', () => {
             const cities = stateCity[stateSelect.value] || [];
             citySelect.innerHTML = '<option value="">Select City</option>';
+
             cities.forEach(city => {
                 const opt = document.createElement('option');
                 opt.value = city;
@@ -60,5 +97,6 @@
             });
         });
     </script>
+
 </body>
 </html>

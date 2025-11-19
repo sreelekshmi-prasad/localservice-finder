@@ -9,14 +9,11 @@ urlpatterns = [
     path('logout/', views.admin_logout, name='logout'),
     path('', views.dashboard, name='dashboard'),
 
-    # categories
-    path('categories/', views.list_categories, name='categories'),
-    path('categories/add/', views.add_category, name='add_category'),
-    path('categories/delete/<str:cat_id>/', views.delete_category, name='delete_category'),
-
     # providers
     path('providers/', views.list_providers, name='providers'),
-    path('providers/delete/<str:prov_id>/', views.delete_provider, name='delete_provider'),
+    path('providers/approve/<str:provider_id>/', views.approve_provider, name='approve_provider'),
+    path('providers/delete/<str:provider_id>/', views.delete_provider, name='delete_provider'),
+
 
     # customers
     path('customers/', views.list_customers, name='customers'),

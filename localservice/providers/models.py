@@ -1,24 +1,43 @@
 # providers/models.py
-from mongoengine import Document, StringField, EmailField, ReferenceField, DateTimeField
+import mongoengine as me
 from datetime import datetime
 
-class Provider(Document):
-    full_name = StringField(required=True)
-    email = EmailField(required=True, unique=True)
-    password = StringField(required=True)
-    phone = StringField()
-    bio = StringField()
-    state = StringField()
-    city = StringField()
-    created_at = DateTimeField(default=datetime.utcnow)
+class Provider(me.Document):
+    full_name = me.StringField(required=True)
+    email = me.EmailField(required=True)
+    phone = me.StringField()
+    password = me.StringField()
+    service_name = me.StringField()
+    service_category = me.StringField()
+    state = me.StringField()
+    city = me.StringField()
+    is_approved = me.BooleanField(default=False)
+    created_at = me.DateTimeField(default=datetime.utcnow)
+    meta = {'collection': 'providers'}
 
-    def __str__(self):
-        return self.full_name  # helps when displaying in admin templates
+class Service(me.Document):
+    title = me.StringField(required=True)
+    category = me.StringField()
+    provider = me.ReferenceField(Provider)
+    created_at = me.DateTimeField(default=datetime.utcnow)
+    meta = {'collection': 'services'}
+
+class AvailabilitySlot(me.Document):
+    provider = me.ReferenceField(Provider)
+    service = me.ReferenceField(Service)
+    date = me.DateField(required=True)
+    start_time = me.StringField(required=True)
+    end_time = me.StringField(required=True)
+    created_at = me.DateTimeField(default=datetime.utcnow)
+
+    meta = {"collection": "availability_slots"}
 
 
-class Service(Document):
-    provider = ReferenceField(Provider, required=True, reverse_delete_rule=2)  # CASCADE
-    title = StringField(required=True)
-    category = StringField()  # simple string category (not a separate Category model)
-    description = StringField()  # add this to show description
-    created_at = DateTimeField(default=datetime.utcnow)
+class Booking(me.Document):
+    slot = me.ReferenceField(AvailabilitySlot)
+    customer_name = me.StringField(required=True)
+    customer_email = me.StringField()
+    customer_phone = me.StringField()
+    booked_at = me.DateTimeField(default=datetime.utcnow)
+
+    meta = {"collection": "bookings"}

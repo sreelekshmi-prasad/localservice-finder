@@ -1,31 +1,59 @@
 {% extends 'adminpanel/base.html' %}
-{% block content %}
-<h2>Providers List</h2>
 
-<table border="1" cellpadding="10">
-  <tr>
+{% block content %}
+<h2 class="page-title">Registered Providers</h2>
+
+<table class="list-table">
+<thead>
+<tr>
     <th>Name</th>
     <th>Email</th>
     <th>Phone</th>
-    <th>Services</th>
-  </tr>
-  {% for item in prov_data %}
-  <tr>
-    <td>{{ item.provider.full_name }}</td>
-    <td>{{ item.provider.email }}</td>
-    <td>{{ item.provider.phone }}</td>
+    <th>Service</th>
+    <th>Category</th>
+    <th>State</th>
+    <th>City</th>
+    <th>Status</th>
+    <th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+{% for p in providers %}
+<tr>
+    <td>{{ p.full_name }}</td>
+    <td>{{ p.email }}</td>
+    <td>{{ p.phone }}</td>
+    <td>{{ p.service_name }}</td>
+    <td>{{ p.service_category }}</td>
+    <td>{{ p.state }}</td>
+    <td>{{ p.city }}</td>
+
     <td>
-      {% if item.services %}
-        <ul>
-        {% for s in item.services %}
-          <li>{{ s.title }}</li>
-        {% endfor %}
-        </ul>
-      {% else %}
-        No services yet
-      {% endif %}
+        {% if p.is_approved %}
+            <span style="color:green;">✔ Approved</span>
+        {% else %}
+            <span style="color:orange;">⏳ Pending</span>
+        {% endif %}
     </td>
-  </tr>
-  {% endfor %}
+
+    <td>
+        {% if not p.is_approved %}
+            <a href="{% url 'adminpanel:approve_provider' p.id %}" class="btn btn-approve">
+                Approve
+            </a>
+        {% endif %}
+
+        <form method="POST"
+              action="{% url 'adminpanel:delete_provider' p.id %}"
+              style="display:inline;">
+            {% csrf_token %}
+            <button class="btn btn-delete">Delete</button>
+        </form>
+    </td>
+</tr>
+{% endfor %}
+</tbody>
 </table>
+
 {% endblock %}
